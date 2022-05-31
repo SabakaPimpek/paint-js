@@ -1,0 +1,99 @@
+body
+{
+    margin: 0;
+    width: 100vw;
+    height: 100vh;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.canvas-wrap
+{
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+canvas
+{
+    position: absolute;
+    top: 0;
+    left: 0;
+    cursor: crosshair;
+}
+
+.menu
+{
+    width: 12%;
+    height: 100%;
+    background: steelblue;
+    position: absolute;
+    box-sizing: border-box;
+    border-left: 2px solid black;
+    right: 0;
+    min-width: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.colors
+{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+}
+
+.colors > div.active
+{
+    border: white;
+}
+
+.colors > div
+{
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    border: 2px solid black;
+    cursor: pointer;
+}
+
+.eraser
+{
+    width: 50px;
+    height: 50px;
+    border: 2px solid black;
+    border-radius: 10px;
+    margin-top: 30px;
+    cursor: pointer;
+}
+
+.eraser > img
+{
+    width: 100%;
+    height: 100%;
+}
+
+.lineWidth
+{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.lineWidth > div
+{
+    background: black;
+    border-radius: 50%;
+    margin: 20px;
+}
+
+.lineWidth > div::before
+{
+    display: block;
+    content: "";
+    width: 50px;
+    height: 50px;
+    border: 1px solid red;
+}
