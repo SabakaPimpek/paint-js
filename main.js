@@ -12,14 +12,14 @@ let mouse = {
 let flags = {
     isDrawing: false,
     currentColor: "black",
-    currentWidth: 5
+    currentWidth: 1,
+    currentTool: "brush"
 }
         
 function resizeCanvas() {
   canvas.width = window.innerWidth;
   canvas.height = window.innerHeight;
-  ctx.lineJoin = "round";
-  ctx.lineCap = "round";
+  changeTool();
 }
 
 canvas.addEventListener("mousemove", (e) => {
@@ -35,8 +35,7 @@ canvas.addEventListener("mousedown", () => {
 
     ctx.beginPath();
     ctx.moveTo(mouseX, mouseY)
-    ctx.lineWidth = flags.currentWidth;
-    ctx.strokeStyle = flags.currentColor;
+    ctx.lineWidth = flags.currentWidth*5;
     draw();
 
     canvas.addEventListener("mousemove", draw)
@@ -47,11 +46,46 @@ canvas.addEventListener("mousedown", () => {
     })
 
     function draw() {
-        ctx.lineTo(mouseX, mouseY);
-        ctx.stroke();
+
+        if(flags.currentTool === "spray") drawSpray()
+        else {
+            ctx.lineTo(mouseX, mouseY);
+            ctx.stroke();
+        }
     }
 
-    //
+    function drawSpray()
+    {
+        const y = flags.currentWidth * 5;
+
+        for(i=0; i<y; i++)
+        {
+            const x = flags.currentWidth*6;
+            let random = Math.random() * (x - -x) + -x;
+            ctx.fillRect(mouse.x + Math.random() * (x - -x) + -x, mouse.y + Math.random() * (x - -x) + -x, 5, 5)
+        }
+    }
+
 })
+
+function changeTool()
+{
+    ctx.lineJoin = "round";
+    ctx.lineCap = "round";
+    ctx.shadowBlur = 0;
+    ctx.shadowColor = flags.currentColor;
+    ctx.strokeStyle = flags.currentColor;
+    ctx.fillStyle = flags.currentColor;
+
+    if(flags.currentTool === "brush")
+    {
+        ctx.shadowBlur = "5";
+        ctx.shadowColor = flags.currentColor;
+    }
+    else if(flags.currentTool === "eraser")
+    {
+        ctx.strokeStyle = "white";
+    }
+}
 
 resizeCanvas();
